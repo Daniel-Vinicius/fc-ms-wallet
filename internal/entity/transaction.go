@@ -29,11 +29,11 @@ func NewTransaction(accountFrom *Account, accountTo * Account, amount float64) (
 		return nil, err
 	}
 
-	transaction.Commit()
+	transaction.commit()
 	return transaction, nil
 }
 
-func (t *Transaction) Commit() {
+func (t *Transaction) commit() {
 	t.AccountFrom.Debit(t.Amount)
 	t.AccountTo.Credit(t.Amount)
 }

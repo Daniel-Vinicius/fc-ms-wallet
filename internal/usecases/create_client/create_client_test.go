@@ -3,27 +3,13 @@ package createclient
 import (
 	"testing"
 
-	"github.com/Daniel-Vinicius/fc-ms-wallet/internal/entity"
+	"github.com/Daniel-Vinicius/fc-ms-wallet/internal/gateway/mocks"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 )
 
-type ClientGatewayMock struct {
-	mock.Mock
-}
-
-func (mock *ClientGatewayMock) Save(client *entity.Client) error {
-	args := mock.Called(client)
-	return args.Error(0)
-}
-
-func (mock *ClientGatewayMock) Get(id string) (*entity.Client, error) {
-	args := mock.Called(id)
-	return args.Get(0).(*entity.Client), args.Error(1)
-}
-
 func TestCreateClientUseCase_Execute(t *testing.T) {
-	m := &ClientGatewayMock{}
+	m := mocks.NewClientGatewayMock()
 	m.On("Save", mock.Anything).Return(nil)
 	useCase := NewCreateClientUseCase(m)
 
